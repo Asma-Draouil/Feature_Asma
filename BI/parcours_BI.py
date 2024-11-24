@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import csv
 
 # URL de la page web
 url = 'https://www.esb.tn/programmes/licences/licence-en-business-computing/'
@@ -31,12 +32,12 @@ if objective_bi:
     df = pd.DataFrame(objective_bi, columns=['Objectif BI'])
 
     # Exporter vers un fichier CSV
-    df.to_csv('objectif_bi.csv', index=False, encoding='utf-8-sig')
+''' df.to_csv('objectif_bi.csv', index=False, encoding='utf-8-sig')
 
     print("Les objectifs ont été enregistrés dans le fichier 'objectif_bi.csv'.")
 else:
     print("Aucun objectif spécifique pour le parcours BI trouvé.")
-
+'''
 
 # Trouver la balise <h3> avec le texte "Contenu"
 contenu_section = soup.find('h3', text="Contenu")
@@ -58,13 +59,13 @@ if contenu_section:
     # Créer un DataFrame à partir de la liste
     df = pd.DataFrame(content_list, columns=['Contenu'])
 
-    # Exporter le DataFrame en fichier CSV
+''' # Exporter le DataFrame en fichier CSV
     df.to_csv('contenu_extrait.csv', index=False, encoding='utf-8-sig')
 
     print("Le contenu a été enregistré dans le fichier 'contenu_extrait.csv'.")
 else:
     print("Section 'Contenu' non trouvée.")
-
+'''
 
 # Trouver la balise <h3> avec le texte "Compétences"
 competences_section = soup.find('h3', text="Compétences")
@@ -86,13 +87,13 @@ if competences_section:
     # Créer un DataFrame avec les compétences
     df = pd.DataFrame(competences, columns=['Compétences'])
 
-    # Exporter les compétences en fichier CSV
+''' # Exporter les compétences en fichier CSV
     df.to_csv('competences_extraites.csv', index=False, encoding='utf-8-sig')
 
     print("Les compétences ont été enregistrées dans le fichier 'competences_extraites.csv'.")
 else:
     print("Section 'Compétences' non trouvée.")
-
+'''
 
 
 
@@ -116,13 +117,13 @@ if metiers_section:
     # Créer un DataFrame avec les métiers
     df = pd.DataFrame(metiers, columns=['Métiers'])
 
-    # Exporter les métiers en fichier CSV
+''' # Exporter les métiers en fichier CSV
     df.to_csv('metiers_extraits.csv', index=False, encoding='utf-8-sig')
 
     print("Les métiers ont été enregistrés dans le fichier 'metiers_extraits.csv'.")
 else:
     print("Section 'Métiers' non trouvée.")
-
+'''
 
 
 # Extraire la section "Secteurs d’activité"
@@ -145,13 +146,13 @@ if secteurs_section:
     # Créer un DataFrame avec les secteurs
     df = pd.DataFrame(secteurs, columns=['Secteurs d’activité'])
 
-    # Exporter les secteurs en fichier CSV
+'''# Exporter les secteurs en fichier CSV
     df.to_csv('secteurs_activite_extraits.csv', index=False, encoding='utf-8-sig')
 
     print("Les secteurs d’activité ont été enregistrés dans le fichier 'secteurs_activite_extraits.csv'.")
 else:
     print("Section 'Secteurs d’activité' non trouvée.")
-
+'''
 
 # Extraire la section "Partenariats professionnels"
 partenariats_section = soup.find('h3', text="Partenariats professionnels")
@@ -173,13 +174,13 @@ if partenariats_section:
     # Créer un DataFrame avec les partenariats
     df = pd.DataFrame(partenariats, columns=['Partenariats professionnels'])
 
-    # Exporter les partenariats en fichier CSV
+''' # Exporter les partenariats en fichier CSV
     df.to_csv('partenariats_professionnels_extraits.csv', index=False, encoding='utf-8-sig')
 
     print("Les partenariats professionnels ont été enregistrés dans le fichier 'partenariats_professionnels_extraits.csv'.")
 else:
     print("Section 'Partenariats professionnels' non trouvée.")
-
+'''
 
 
 
@@ -209,30 +210,31 @@ for semester_id in semester_ids:
             semesters_data.append({'Semestre': semester_name, 'Matière': subject})
             print(subject)
 
-# Créer un DataFrame avec les données des semestres
+'''# Créer un DataFrame avec les données des semestres
 df = pd.DataFrame(semesters_data)
 
 # Exporter les matières par semestre en fichier CSV
 df.to_csv('matieres_par_semestre.csv', index=False, encoding='utf-8-sig')
 
 print("Les matières par semestre ont été enregistrées dans le fichier 'matieres_par_semestre.csv'.")
-
+'''
 
 data = {
     'Objectifs': objective_bi,
-    'Contenu': contenu,
+    'Contenu': content,
     'Compétences': competences,
     'Métiers': metiers,
     'Secteurs d’activité': secteurs,
     'Partenariats professionnels': str(partenariats)
 }
 
-for semestre, matieres in matieres_par_semestre.items():
+for semestre, matieres in semesters_data:
     data[semestre] = "\n".join(matieres)
 
 # Écriture dans le fichier CSV
-filename = 'programme_master_marketing_digital.csv'
+filename = 'BI.csv'
 with open(filename, mode='w', newline='', encoding='utf-8-sig') as file:
     writer = csv.writer(file)
     writer.writerow(data.keys())  # En-têtes
     writer.writerow(data.values())  # Valeurs
+print(f"Les données ont été enregistrées dans le fichier {filename}")
