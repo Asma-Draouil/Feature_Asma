@@ -216,3 +216,23 @@ df = pd.DataFrame(semesters_data)
 df.to_csv('matieres_par_semestre.csv', index=False, encoding='utf-8-sig')
 
 print("Les matières par semestre ont été enregistrées dans le fichier 'matieres_par_semestre.csv'.")
+
+
+data = {
+    'Objectifs': objective_bi,
+    'Contenu': contenu,
+    'Compétences': competences,
+    'Métiers': metiers,
+    'Secteurs d’activité': secteurs,
+    'Partenariats professionnels': str(partenariats)
+}
+
+for semestre, matieres in matieres_par_semestre.items():
+    data[semestre] = "\n".join(matieres)
+
+# Écriture dans le fichier CSV
+filename = 'programme_master_marketing_digital.csv'
+with open(filename, mode='w', newline='', encoding='utf-8-sig') as file:
+    writer = csv.writer(file)
+    writer.writerow(data.keys())  # En-têtes
+    writer.writerow(data.values())  # Valeurs
