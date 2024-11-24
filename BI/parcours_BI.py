@@ -171,10 +171,10 @@ if partenariats_section:
     for partenariat in partenariats:
         print(partenariat)
 
-    # Créer un DataFrame avec les partenariats
+''' # Créer un DataFrame avec les partenariats
     df = pd.DataFrame(partenariats, columns=['Partenariats professionnels'])
 
-''' # Exporter les partenariats en fichier CSV
+ # Exporter les partenariats en fichier CSV
     df.to_csv('partenariats_professionnels_extraits.csv', index=False, encoding='utf-8-sig')
 
     print("Les partenariats professionnels ont été enregistrés dans le fichier 'partenariats_professionnels_extraits.csv'.")
